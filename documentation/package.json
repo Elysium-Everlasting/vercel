@@ -1,0 +1,34 @@
+{
+  "name": "@template/documentation",
+  "version": "0.0.1",
+  "description": "documentation",
+  "private": true,
+  "license": "MIT",
+  "homepage": "https://elysium-everlasting.github.io/template",
+  "funding": "https://github.com/Elysium-Everlasting/template",
+  "contributors": [
+    {
+      "name": "ap0nia",
+      "email": "",
+      "url": "https://github.com/ap0nia"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elysium-Everlasting/template",
+    "directory": "documentation"
+  },
+  "bugs": {
+    "url": "https://github.com/Elysium-Everlasting/template/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev src/routes",
+    "build": "vitepress build src/routes",
+    "preview": "vitepress preview src/routes"
+  },
+  "devDependencies": {
+    "ci-info": "^3.8.0",
+    "vitepress": "1.0.0-rc.4"
+  }
+}
