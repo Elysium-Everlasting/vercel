@@ -9,6 +9,7 @@
     "cdk": "cdk --app 'npx tsx tools/cdk/index.ts'",
     "check": "svelte-check",
     "dev": "vite",
+    "dep": "cdk --app 'npx tsx tools/cdk/index.ts' deploy",
     "format": "prettier --write .",
     "postinstall": "svelte-kit sync",
     "lint": "eslint --fix .",
@@ -38,6 +39,7 @@
     "postcss-load-config": "^5.0.2",
     "svelte": "^4.2.9",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.7.0",
     "typescript": "^5.1.6",
     "typescript-svelte-plugin": "^0.3.37",
     "vite": "^5.0.12"

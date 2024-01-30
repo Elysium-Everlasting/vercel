@@ -9,7 +9,10 @@ config({
 
 const envSchema = type(
   {
-    'NODE_ENV?': 'string',
+    APP_ID: 'string',
+    CLIENT_SECRET: 'string',
+    WEBHOOK_SECRET: 'string',
+    PRIVATE_KEY_PATH: 'string',
   },
   { keys: 'distilled' },
 )

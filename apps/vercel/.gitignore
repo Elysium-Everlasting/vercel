@@ -3,7 +3,10 @@
 #####################################################################################
 
 ## SvelteKit build output.
-.build/
+build/
 
 ## SvelteKit generated files.
 .svelte-kit/
+
+## CDK output.
+cdk.out/
