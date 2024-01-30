@@ -1,13 +1,9 @@
-// @ts-check
-
 import { fontFamily } from 'tailwindcss/defaultTheme'
 
-/**
- * @type {import('tailwindcss').Config}
- */
+/** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: ['class'],
-  content: ['./src/**/*.{svelte,ts}'],
+  content: ['./src/**/*.{html,js,svelte,ts}'],
   safelist: ['dark'],
   theme: {
     container: {
@@ -59,9 +55,10 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans],
+        sans: [...fontFamily.sans],
       },
     },
   },
 }
+
 export default config
