@@ -1,4 +1,5 @@
 import { createAppAuth } from '@octokit/auth-app'
+import { Client, cacheExchange, fetchExchange } from '@urql/core'
 import { App, Octokit } from 'octokit'
 
 import { APP_ID, PRIVATE_KEY, WEBHOOK_SECRET } from '$env/static/private'
@@ -45,5 +46,17 @@ export const r = octokit.request.defaults({
 export const g = octokit.graphql.defaults({
   headers: {
     authorization: `Bearer ${token}`,
+  },
+})
+
+export const client = new Client({
+  url: 'https://api.github.com/graphql',
+  exchanges: [cacheExchange, fetchExchange],
+  fetchOptions: () => {
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   },
 })

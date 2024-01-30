@@ -30574,21 +30574,16 @@ export type GetDeploymentsQuery = {
   __typename?: 'Query'
   repository?: {
     __typename?: 'Repository'
-    issues: {
-      __typename?: 'IssueConnection'
+    deployments: {
+      __typename?: 'DeploymentConnection'
       edges?: Array<{
-        __typename?: 'IssueEdge'
+        __typename?: 'DeploymentEdge'
         node?: {
-          __typename?: 'Issue'
-          title: string
-          url: any
-          labels?: {
-            __typename?: 'LabelConnection'
-            edges?: Array<{
-              __typename?: 'LabelEdge'
-              node?: { __typename?: 'Label'; name: string } | null
-            } | null> | null
-          } | null
+          __typename?: 'Deployment'
+          id: string
+          state?: DeploymentState | null
+          task?: string | null
+          ref?: { __typename?: 'Ref'; name: string } | null
         } | null
       } | null> | null
     }
@@ -30643,17 +30638,12 @@ export const GetDeploymentsDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'issues' },
+                  name: { kind: 'Name', value: 'deployments' },
                   arguments: [
                     {
                       kind: 'Argument',
                       name: { kind: 'Name', value: 'last' },
-                      value: { kind: 'IntValue', value: '20' },
-                    },
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'states' },
-                      value: { kind: 'EnumValue', value: 'CLOSED' },
+                      value: { kind: 'IntValue', value: '30' },
                     },
                   ],
                   selectionSet: {
@@ -30671,46 +30661,19 @@ export const GetDeploymentsDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'state' } },
                                   {
                                     kind: 'Field',
-                                    name: { kind: 'Name', value: 'labels' },
-                                    arguments: [
-                                      {
-                                        kind: 'Argument',
-                                        name: { kind: 'Name', value: 'first' },
-                                        value: { kind: 'IntValue', value: '5' },
-                                      },
-                                    ],
+                                    name: { kind: 'Name', value: 'ref' },
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'edges' },
-                                          selectionSet: {
-                                            kind: 'SelectionSet',
-                                            selections: [
-                                              {
-                                                kind: 'Field',
-                                                name: { kind: 'Name', value: 'node' },
-                                                selectionSet: {
-                                                  kind: 'SelectionSet',
-                                                  selections: [
-                                                    {
-                                                      kind: 'Field',
-                                                      name: { kind: 'Name', value: 'name' },
-                                                    },
-                                                  ],
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                                       ],
                                     },
                                   },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'task' } },
                                 ],
                               },
                             },
