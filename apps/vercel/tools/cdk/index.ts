@@ -12,7 +12,8 @@ const envSchema = type(
     APP_ID: 'string',
     CLIENT_SECRET: 'string',
     WEBHOOK_SECRET: 'string',
-    PRIVATE_KEY_PATH: 'string',
+    PRIVATE_KEY: 'string',
+    DATABASE_URL: 'string',
   },
   { keys: 'distilled' },
 )
@@ -28,9 +29,11 @@ async function main(): Promise<void> {
 
   const sveltekit = new SvelteKit(stack, stackName, {
     constructProps: {
-      handler: () => ({
-        environment,
-      }),
+      handler: () => {
+        return {
+          environment,
+        }
+      },
     },
   })
 

@@ -17,12 +17,16 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@octokit/auth-app": "^6.0.3",
+    "@octokit/webhooks": "^12.0.11",
+    "@prisma/client": "^5.8.1",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "arktype": "1.0.29-alpha",
     "bits-ui": "^0.16.0",
     "clsx": "^2.1.0",
     "lucide-svelte": "^0.317.0",
     "mode-watcher": "^0.2.0",
+    "octokit": "^3.1.2",
     "radix-icons-svelte": "^1.2.1",
     "tailwind-merge": "^2.2.1",
     "tailwind-variants": "^0.1.20"
@@ -37,6 +41,7 @@
     "dotenv": "^16.4.1",
     "postcss": "^8.4.33",
     "postcss-load-config": "^5.0.2",
+    "prisma": "^5.8.1",
     "svelte": "^4.2.9",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.7.0",
