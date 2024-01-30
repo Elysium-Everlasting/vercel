@@ -8,6 +8,7 @@
     "build": "vite build",
     "cdk": "cdk --app 'npx tsx tools/cdk/index.ts'",
     "check": "svelte-check",
+    "codegen": "graphql-codegen",
     "dev": "vite",
     "dep": "cdk --app 'npx tsx tools/cdk/index.ts' deploy",
     "format": "prettier --write .",
@@ -32,6 +33,9 @@
     "tailwind-variants": "^0.1.20"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@svelte.kit/adapter-aws": "^0.2.3",
     "@svelte.kit/cdk": "^0.2.3",
     "@sveltejs/kit": "^2.5.0",
@@ -39,6 +43,7 @@
     "aws-cdk": "^2.124.0",
     "aws-cdk-lib": "^2.124.0",
     "dotenv": "^16.4.1",
+    "graphql-codegen-svelte-apollo": "^1.1.0",
     "postcss": "^8.4.33",
     "postcss-load-config": "^5.0.2",
     "prisma": "^5.8.1",
