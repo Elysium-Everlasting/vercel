@@ -1,22 +1,9 @@
 import type { EmitterWebhookEventName } from '@octokit/webhooks'
-import { PrismaClient } from '@prisma/client'
-import { App } from 'octokit'
-
-const prisma = new PrismaClient({
-  datasourceUrl: DATABASE_URL,
-})
 
 import type { RequestHandler } from './$types'
 
-import { APP_ID, DATABASE_URL, PRIVATE_KEY, WEBHOOK_SECRET } from '$env/static/private'
-
-const app = new App({
-  appId: APP_ID,
-  privateKey: PRIVATE_KEY,
-  webhooks: {
-    secret: WEBHOOK_SECRET,
-  },
-})
+import { app } from '$lib/github'
+import { prisma } from '$lib/prisma'
 
 app.webhooks.on('push', async ({ id, name, payload }) => {
   console.log('PUSHED', { id, name, payload })
