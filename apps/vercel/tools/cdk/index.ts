@@ -15,6 +15,7 @@ const envSchema = type(
     CLIENT_SECRET: 'string',
     WEBHOOK_SECRET: 'string',
     PRIVATE_KEY: 'string',
+    DATABASE_URL: 'string',
   },
   { keys: 'distilled' },
 )
