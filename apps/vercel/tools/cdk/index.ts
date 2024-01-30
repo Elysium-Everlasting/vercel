@@ -12,7 +12,7 @@ const envSchema = type(
     APP_ID: 'string',
     CLIENT_SECRET: 'string',
     WEBHOOK_SECRET: 'string',
-    PRIVATE_KEY_PATH: 'string',
+    PRIVATE_KEY: 'string',
   },
   { keys: 'distilled' },
 )
