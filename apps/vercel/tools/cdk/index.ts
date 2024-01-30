@@ -1,5 +1,3 @@
-import fs from 'node:fs'
-
 import { SvelteKit } from '@svelte.kit/cdk'
 import { type } from 'arktype'
 import { App, Stack } from 'aws-cdk-lib'
@@ -31,16 +29,7 @@ async function main(): Promise<void> {
 
   const sveltekit = new SvelteKit(stack, stackName, {
     constructProps: {
-      handler: (scope) => {
-        const directory = scope.options.lambdaDirectory
-
-        fs.copyFileSync(
-          'node_modules/prisma/libquery_engine-debian-openssl-3.0.x.so.node',
-          `${directory}/libquery_engine-debian-openssl-3.0.x.so.node`,
-        )
-
-        fs.copyFileSync('prisma/schema.prisma', `${directory}/schema.prisma`)
-
+      handler: () => {
         return {
           environment,
         }
