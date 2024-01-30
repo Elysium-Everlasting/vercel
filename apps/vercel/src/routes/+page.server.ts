@@ -1,3 +1,14 @@
 import type { PageServerLoad } from './$types'
 
-export const load: PageServerLoad = async () => {}
+import { octokit } from '$lib/github'
+
+export const load: PageServerLoad = async () => {
+  const response = await octokit.request('GET /repos/{owner}/{repo}/commits', {
+    owner: 'elysium-everlasting',
+    repo: 'demo',
+  })
+
+  return {
+    commits: response.data,
+  }
+}
