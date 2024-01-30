@@ -44,6 +44,10 @@ const config = {
     },
   },
   ignorePatterns: ['*.config.*', '*.cjs'],
+  env: {
+    browser: true,
+    node: true,
+  },
 }
 
 module.exports = config
