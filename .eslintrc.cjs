@@ -37,6 +37,7 @@ const config = {
         'newlines-between': 'always',
       },
     ],
+    'import/no-unresolved': 'off',
   },
   settings: {
     'import/resolver': {
