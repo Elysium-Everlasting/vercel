@@ -2,14 +2,10 @@ import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   schema: 'schema.docs.graphql',
-  documents: ['src/**/*.{ts,svelte}'],
+  documents: ['./src/**/*.{ts,svelte}'],
   generates: {
-    './src/__generated__/': {
-      preset: 'client',
-      plugins: ['typescript', 'typescript-operations', 'graphql-codegen-svelte-apollo'],
-      presetConfig: {
-        gqlTagName: 'gql',
-      },
+    './src/lib/__generated__/': {
+      preset: 'client-preset',
     },
   },
   ignoreNoDocuments: true,
