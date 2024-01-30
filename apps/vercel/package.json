@@ -1,5 +1,21 @@
 {
   "name": "@apps/vercel",
   "version": "0.1.0",
-  "private": true
+  "description": "vercel at home :tm:",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "svelte-kit sync",
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "@sveltejs/kit": "^2.5.0",
+    "svelte": "^4.2.9",
+    "typescript": "^5.1.6",
+    "typescript-svelte-plugin": "^0.3.37",
+    "vite": "^5.0.12"
+  },
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.2"
+  }
 }
