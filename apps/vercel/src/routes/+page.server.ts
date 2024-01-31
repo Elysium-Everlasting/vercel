@@ -7,7 +7,7 @@ import { notNull } from '$lib/utils'
 const deploymentsQuery = graphql(`
   query GetDeployments($owner: String!, $name: String!) {
     repository(owner: $owner, name: $name) {
-      deployments(last: 30, orderBy: { field: CREATED_AT, direction: DESC }) {
+      deployments(last: 10, orderBy: { field: CREATED_AT, direction: DESC }) {
         edges {
           node {
             id

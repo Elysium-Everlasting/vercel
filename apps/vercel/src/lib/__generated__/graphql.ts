@@ -30714,7 +30714,7 @@ export const GetDeploymentsDocument = {
                     {
                       kind: 'Argument',
                       name: { kind: 'Name', value: 'last' },
-                      value: { kind: 'IntValue', value: '30' },
+                      value: { kind: 'IntValue', value: '10' },
                     },
                     {
                       kind: 'Argument',

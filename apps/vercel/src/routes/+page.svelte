@@ -3,6 +3,8 @@
   import GitFork from 'lucide-svelte/icons/git-branch'
   import * as Card from '$lib/components/ui/card'
   import type { PageData } from './$types'
+  import { invalidateAll } from '$app/navigation'
+  import { onMount } from 'svelte'
 
   interface StatusDisplay {
     text: string
@@ -28,6 +30,13 @@
   }
 
   export let data: PageData
+
+  // onMount(() => {
+  //   const interval = setInterval(invalidateAll, 1000 * 5)
+  //   return () => {
+  //   clearInterval(interval)
+  //   }
+  // })
 </script>
 
 <div class="max-w-7xl mx-auto">
