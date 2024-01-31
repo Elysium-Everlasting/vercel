@@ -30586,13 +30586,21 @@ export type GetDeploymentsQuery = {
           updatedAt: any
           task?: string | null
           ref?: { __typename?: 'Ref'; name: string } | null
+          latestStatus?: {
+            __typename?: 'DeploymentStatus'
+            environmentUrl?: any | null
+            logUrl?: any | null
+          } | null
           commit?: {
             __typename?: 'Commit'
             abbreviatedOid: string
             oid: any
             committedDate: any
             message: string
+            commitUrl: any
+            treeResourcePath: any
             author?: { __typename?: 'GitActor'; avatarUrl: any; name?: string | null } | null
+            tree: { __typename?: 'Tree'; commitResourcePath: any }
           } | null
         } | null
       } | null> | null
@@ -30655,6 +30663,25 @@ export const GetDeploymentsDocument = {
                       name: { kind: 'Name', value: 'last' },
                       value: { kind: 'IntValue', value: '30' },
                     },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderBy' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'field' },
+                            value: { kind: 'EnumValue', value: 'CREATED_AT' },
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'direction' },
+                            value: { kind: 'EnumValue', value: 'DESC' },
+                          },
+                        ],
+                      },
+                    },
                   ],
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -30689,6 +30716,20 @@ export const GetDeploymentsDocument = {
                                   },
                                   {
                                     kind: 'Field',
+                                    name: { kind: 'Name', value: 'latestStatus' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'environmentUrl' },
+                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'logUrl' } },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: 'Field',
                                     name: { kind: 'Name', value: 'commit' },
                                     selectionSet: {
                                       kind: 'SelectionSet',
@@ -30705,6 +30746,10 @@ export const GetDeploymentsDocument = {
                                         { kind: 'Field', name: { kind: 'Name', value: 'message' } },
                                         {
                                           kind: 'Field',
+                                          name: { kind: 'Name', value: 'commitUrl' },
+                                        },
+                                        {
+                                          kind: 'Field',
                                           name: { kind: 'Name', value: 'author' },
                                           selectionSet: {
                                             kind: 'SelectionSet',
@@ -30716,6 +30761,23 @@ export const GetDeploymentsDocument = {
                                               {
                                                 kind: 'Field',
                                                 name: { kind: 'Name', value: 'name' },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'treeResourcePath' },
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'tree' },
+                                          selectionSet: {
+                                            kind: 'SelectionSet',
+                                            selections: [
+                                              {
+                                                kind: 'Field',
+                                                name: { kind: 'Name', value: 'commitResourcePath' },
                                               },
                                             ],
                                           },

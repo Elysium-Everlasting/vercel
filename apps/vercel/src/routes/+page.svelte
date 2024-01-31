@@ -14,6 +14,10 @@
       text: 'Ready',
       color: 'bg-green-300',
     },
+    INACTIVE: {
+      text: 'Inactive',
+      color: 'bg-gray-500',
+    },
   }
 
   function getStatusInfo(status?: string | null) {
@@ -27,62 +31,70 @@
 </script>
 
 <div class="max-w-7xl mx-auto">
-  {#each data.repository?.deployments.edges ?? [] as deployment}
-    {@const status = getStatusInfo(deployment?.node?.state)}
+  {#each data.repository?.deployments ?? [] as deployment}
+    {@const status = getStatusInfo(deployment.state)}
 
     <Card.Root class="p-2">
-      <Card.Content class="flex pb-0 justify-between">
-        <div class="">
-          <p class="font-bold">{deployment?.node?.id}</p>
-          <p>{deployment?.node?.latestEnvironment}</p>
+      <Card.Content class="flex pb-0">
+        <!-- Section 1 -->
+        <div class="basis-0 grow shrink">
+          <a href={deployment.latestStatus?.logUrl} class="font-bold text-sm hover:underline">
+            {deployment.id}
+          </a>
+          <p class="opacity-80 text-sm">
+            {deployment.latestEnvironment}
+          </p>
         </div>
 
-        <div class="flex items-center gap-2">
+        <!-- Section 2 -->
+        <div class="w-40 flex justify-stretch items-center gap-2 grow-0 shrink-0">
           <div
             class="w-3 h-3 rounded-full {status.color}"
             style="background-color: ${status.color}"
           ></div>
-          <p>{status.text}</p>
+          <p class="text-sm">{status.text}</p>
         </div>
 
-        <div>
+        <!-- Section 3 -->
+        <div class="flex flex-col shrink overflow-hidden text-xs basis-0 grow shrink">
           <div class="flex items-center gap-2">
             <div>
               <GitFork class="w-5 h-5" />
             </div>
-            <p>{deployment?.node?.ref?.name}</p>
+            <a href={deployment.treeUrl} class="hover:underline">
+              {deployment.ref?.name}
+            </a>
           </div>
 
           <div class="flex items-center gap-2">
             <div>
               <GitCommit class="w-5 h-5" />
             </div>
-            <p>
-              <span>
-                {deployment?.node?.commit?.abbreviatedOid}
+
+            <a href={deployment.commit?.commitUrl} class="group truncate">
+              <span class="group-hover:underline">
+                {deployment.commit?.abbreviatedOid}
               </span>
-              <span>
-                {deployment?.node?.commit?.message}
+              <span class="truncate group-hover:underline">
+                {deployment.commit?.message}
               </span>
-            </p>
+            </a>
           </div>
         </div>
 
-        <div class="flex items-center">
-          <p>
-            {deployment?.node?.commit?.committedDate} by {deployment?.node?.commit?.author?.name}
+        <!-- Section 4 -->
+        <div class="flex items-center justify-end gap-2 text-sm basis-0 grow shrink">
+          <p class="truncate">
+            {deployment.lastUpdatedRelative} by {deployment.commit?.author?.name}
           </p>
           <div class="w-6 h-6 rounded-full overflow-hidden">
             <img
-              src={deployment?.node?.commit?.author?.avatarUrl}
+              src={deployment?.commit?.author?.avatarUrl}
               alt="committer avatar"
               class="w-full h-full"
             />
           </div>
         </div>
-        <!--
-        <p>{deployment.creator?.login}</p>
-        -->
       </Card.Content>
     </Card.Root>
   {/each}

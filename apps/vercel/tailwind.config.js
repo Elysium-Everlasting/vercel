@@ -1,10 +1,16 @@
+// @ts-check
+
+import typography from '@tailwindcss/typography'
 import { fontFamily } from 'tailwindcss/defaultTheme'
 
-/** @type {import('tailwindcss').Config} */
+/**
+ * @type {import('tailwindcss').Config}
+ */
 const config = {
   darkMode: ['class'],
   content: ['./src/**/*.{html,js,svelte,ts}'],
   safelist: ['dark'],
+  plugins: [typography],
   theme: {
     container: {
       center: true,

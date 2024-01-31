@@ -1,5 +1,5 @@
 import { createAppAuth } from '@octokit/auth-app'
-import { Client, cacheExchange, fetchExchange } from '@urql/core'
+import { Client, fetchExchange } from '@urql/core'
 import { App, Octokit } from 'octokit'
 
 import { APP_ID, PRIVATE_KEY, WEBHOOK_SECRET } from '$env/static/private'
@@ -51,7 +51,7 @@ export const g = octokit.graphql.defaults({
 
 export const client = new Client({
   url: 'https://api.github.com/graphql',
-  exchanges: [cacheExchange, fetchExchange],
+  exchanges: [fetchExchange],
   fetchOptions: () => {
     return {
       headers: {

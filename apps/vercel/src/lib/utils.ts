@@ -54,3 +54,7 @@ export const flyAndScale = (
     easing: cubicOut,
   }
 }
+
+export function notNull<T>(value: T): value is NonNullable<T> {
+  return value != null
+}
