@@ -3,15 +3,29 @@
 name: Do something
 
 on:
-  pull_request:
-    types:
-      - opened
+  workflow_dispatch:
+    inputs:
+      TOKEN:
+        description: GitHub app token.
+        required: true
+        type: string
+      repo:
+        description: Remote repository.
+        required: true
+        type: string
+      owner:
+        description: Owner of remote repository
+        required: true
+        type: string
 
 jobs:
   do_something:
     name: Do something
 
     runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ inputs.owner }}/${{ inputs.repo }}
 
     steps:
       - name: Checkout repository

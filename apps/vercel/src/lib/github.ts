@@ -37,13 +37,13 @@ export const token = await octokit
       })
   })
 
-export const r = octokit.request.defaults({
+export const octokitRequest = octokit.request.defaults({
   headers: {
     authorization: `Bearer ${token}`,
   },
 })
 
-export const g = octokit.graphql.defaults({
+export const octokitGraphql = octokit.graphql.defaults({
   headers: {
     authorization: `Bearer ${token}`,
   },

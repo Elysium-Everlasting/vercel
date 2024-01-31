@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types'
 
 import { graphql } from '$lib/__generated__/gql'
-import { client } from '$lib/github'
+import { client, octokitRequest } from '$lib/github'
 import { notNull } from '$lib/utils'
 
 const deploymentsQuery = graphql(`
@@ -65,8 +65,20 @@ function timeBetween(date1: Date, date2 = new Date()) {
 export const load: PageServerLoad = async () => {
   const owner = 'elysium-everlasting'
   const name = 'demo'
+  const repo = 'vercel'
 
   const deploymentsResult = await client.query(deploymentsQuery, { owner, name })
+
+  const workflowResponse = await octokitRequest(
+    'GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}',
+    {
+      owner,
+      repo,
+      workflow_id: '.github/workflows/hello.yml',
+    },
+  )
+
+  console.log(workflowResponse)
 
   const deployments =
     deploymentsResult.data?.repository?.deployments?.edges
