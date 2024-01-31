@@ -35,7 +35,7 @@ jobs:
         id: create_deployment
         uses: ./.github/actions/create-deployment
         with:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ input.TOKEN }}
           environment: preview
           name: ${{ inputs.owner }}/${{ inputs.repo }}
           url: https://github.com
