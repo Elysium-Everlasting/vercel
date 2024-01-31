@@ -30582,8 +30582,18 @@ export type GetDeploymentsQuery = {
           __typename?: 'Deployment'
           id: string
           state?: DeploymentState | null
+          latestEnvironment?: string | null
+          updatedAt: any
           task?: string | null
           ref?: { __typename?: 'Ref'; name: string } | null
+          commit?: {
+            __typename?: 'Commit'
+            abbreviatedOid: string
+            oid: any
+            committedDate: any
+            message: string
+            author?: { __typename?: 'GitActor'; avatarUrl: any; name?: string | null } | null
+          } | null
         } | null
       } | null> | null
     }
@@ -30665,6 +30675,10 @@ export const GetDeploymentsDocument = {
                                   { kind: 'Field', name: { kind: 'Name', value: 'state' } },
                                   {
                                     kind: 'Field',
+                                    name: { kind: 'Name', value: 'latestEnvironment' },
+                                  },
+                                  {
+                                    kind: 'Field',
                                     name: { kind: 'Name', value: 'ref' },
                                     selectionSet: {
                                       kind: 'SelectionSet',
@@ -30673,6 +30687,43 @@ export const GetDeploymentsDocument = {
                                       ],
                                     },
                                   },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'commit' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'abbreviatedOid' },
+                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'oid' } },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'committedDate' },
+                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'message' } },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'author' },
+                                          selectionSet: {
+                                            kind: 'SelectionSet',
+                                            selections: [
+                                              {
+                                                kind: 'Field',
+                                                name: { kind: 'Name', value: 'avatarUrl' },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: { kind: 'Name', value: 'name' },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
                                   { kind: 'Field', name: { kind: 'Name', value: 'task' } },
                                 ],
                               },

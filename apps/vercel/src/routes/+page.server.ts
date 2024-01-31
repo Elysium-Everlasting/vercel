@@ -11,9 +11,21 @@ const a = graphql(`
           node {
             id
             state
+            latestEnvironment
             ref {
               name
             }
+            commit {
+              abbreviatedOid
+              oid
+              committedDate
+              message
+              author {
+                avatarUrl
+                name
+              }
+            }
+            updatedAt
             task
           }
         }
@@ -28,9 +40,7 @@ export const load: PageServerLoad = async () => {
     name: 'demo',
   })
 
-  console.log('result: ', JSON.stringify(result.data?.repository, null, 2))
-
   return {
-    deployments: [],
+    repository: result.data?.repository,
   }
 }

@@ -11,7 +11,7 @@
     "dev": "vite",
     "dep": "cdk --app 'npx tsx tools/cdk/index.ts' deploy",
     "format": "prettier --write .",
-    "gen": "graphql-codegen-esm --config codegen.ts",
+    "gen": "graphql-codegen",
     "postinstall": "svelte-kit sync",
     "lint": "eslint --fix .",
     "preview": "vite preview",

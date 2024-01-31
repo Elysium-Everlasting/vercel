@@ -13,7 +13,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  '\n  query GetDeployments($owner: String!, $name: String!) {\n    repository(owner: $owner, name: $name) {\n      deployments(last: 30) {\n        edges {\n          node {\n            id\n            state\n            ref {\n              name\n            }\n            task\n          }\n        }\n      }\n    }\n  }\n':
+  '\n  query GetDeployments($owner: String!, $name: String!) {\n    repository(owner: $owner, name: $name) {\n      deployments(last: 30) {\n        edges {\n          node {\n            id\n            state\n            latestEnvironment\n            ref {\n              name\n            }\n            commit {\n              abbreviatedOid\n              oid\n              committedDate\n              message\n              author {\n                avatarUrl\n                name\n              }\n            }\n            updatedAt\n            task\n          }\n        }\n      }\n    }\n  }\n':
     types.GetDeploymentsDocument,
 }
 
@@ -35,8 +35,8 @@ export function graphql(source: string): unknown
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetDeployments($owner: String!, $name: String!) {\n    repository(owner: $owner, name: $name) {\n      deployments(last: 30) {\n        edges {\n          node {\n            id\n            state\n            ref {\n              name\n            }\n            task\n          }\n        }\n      }\n    }\n  }\n',
-): (typeof documents)['\n  query GetDeployments($owner: String!, $name: String!) {\n    repository(owner: $owner, name: $name) {\n      deployments(last: 30) {\n        edges {\n          node {\n            id\n            state\n            ref {\n              name\n            }\n            task\n          }\n        }\n      }\n    }\n  }\n']
+  source: '\n  query GetDeployments($owner: String!, $name: String!) {\n    repository(owner: $owner, name: $name) {\n      deployments(last: 30) {\n        edges {\n          node {\n            id\n            state\n            latestEnvironment\n            ref {\n              name\n            }\n            commit {\n              abbreviatedOid\n              oid\n              committedDate\n              message\n              author {\n                avatarUrl\n                name\n              }\n            }\n            updatedAt\n            task\n          }\n        }\n      }\n    }\n  }\n',
+): (typeof documents)['\n  query GetDeployments($owner: String!, $name: String!) {\n    repository(owner: $owner, name: $name) {\n      deployments(last: 30) {\n        edges {\n          node {\n            id\n            state\n            latestEnvironment\n            ref {\n              name\n            }\n            commit {\n              abbreviatedOid\n              oid\n              committedDate\n              message\n              author {\n                avatarUrl\n                name\n              }\n            }\n            updatedAt\n            task\n          }\n        }\n      }\n    }\n  }\n']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
