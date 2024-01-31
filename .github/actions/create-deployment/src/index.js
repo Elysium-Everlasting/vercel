@@ -46,7 +46,7 @@ async function main() {
   const deploymentIdInput = core.getInput('deployment_id')
 
   const token = core.getInput('TOKEN')
-  const name = core.getInput('name')
+  const ref = 'main' // core.getInput('ref')
   const environment = core.getInput('environment')
   const url = core.getInput('url')
   const repo = core.getInput('repo')
@@ -55,7 +55,6 @@ async function main() {
   let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined
   /** @type {any} */
   const state = core.getInput('status')
-  const ref = getBranchName()
 
   const octokit = new Octokit({ auth: token })
 
@@ -67,9 +66,6 @@ async function main() {
       owner,
       ref,
       environment,
-      payload: {
-        [NAME_KEY]: name,
-      },
       auto_merge: false,
       required_contexts: [],
     })

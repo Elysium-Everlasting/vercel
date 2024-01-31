@@ -86,26 +86,35 @@ export const load: PageServerLoad = async () => {
     deployments,
   }
 
-  // const owner = 'elysium-everlasting'
-  const repo = 'vercel'
-  const workflowId = '.github/workflows/hello.yml'
+  // const deployomentResponse = await octokitRequest('POST /repos/{owner}/{repo}/deployments', {
+  //   repo: 'demo',
+  //   owner,
+  //   ref: 'main',
+  //   environment: 'preview',
+  //   auto_merge: false,
+  //   required_contexts: [],
+  // })
 
-  const workflowResponse = await octokitRequest(
-    'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
-    {
-      owner,
-      repo,
-      workflow_id: workflowId,
-      ref: 'main',
-      inputs: {
-        TOKEN: token,
-        repo,
-        owner: name,
-      },
-    },
-  )
+  // console.log(deployomentResponse)
 
-  console.log(workflowResponse)
+  // const repo = 'vercel'
+  // const workflowId = '.github/workflows/hello.yml'
+  // const workflowResponse = await octokitRequest(
+  //   'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
+  //   {
+  //     owner,
+  //     repo,
+  //     workflow_id: workflowId,
+  //     ref: 'main',
+  //     inputs: {
+  //       TOKEN: token,
+  //       repo,
+  //       owner: name,
+  //     },
+  //   },
+  // )
+
+  // console.log(workflowResponse)
 
   return {
     repository,
