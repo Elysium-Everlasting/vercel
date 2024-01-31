@@ -21,6 +21,12 @@ on:
         description: Ref of remote repository
         required: true
         type: string
+      environment:
+        description: Name of the environment to deploy.
+        default: production
+      environment_url:
+        description: URL to view the deployment.
+        required: true
 
 jobs:
   do_something:
@@ -39,7 +45,7 @@ jobs:
           TOKEN: ${{ inputs.TOKEN }}
           repo: ${{ inputs.repo }}
           owner: ${{ inputs.owner }}
-          environment: preview
-          name: ${{ inputs.owner }}/${{ inputs.repo }}
-          url: https://github.com
+          ref: ${{ inputs.ref }}
+          environment: ${{ inputs.environment }}
+          environment_url: ${{ inputs.environment_url }}
           status: success

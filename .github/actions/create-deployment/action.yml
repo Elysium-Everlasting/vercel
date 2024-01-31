@@ -16,10 +16,7 @@ inputs:
   environment:
     description: Environment name for the deployment.
     required: true
-  name:
-    description: Name of the deployment.
-    required: true
-  url:
+  environment_url:
     description: Deployment environment URL.
     required: true
   status:

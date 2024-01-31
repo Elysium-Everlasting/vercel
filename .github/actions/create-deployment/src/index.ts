@@ -11,10 +11,12 @@ async function main() {
   const owner = core.getInput('owner')
   const ref = core.getInput('ref')
   const environment = core.getInput('environment')
-  const url = core.getInput('url')
+  const environmentUrl = core.getInput('environment_url')
   const state: any = core.getInput('status')
 
   const deploymentIdInput = core.getInput('deployment_id')
+
+  ;('${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}')
 
   let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined
 
@@ -45,6 +47,8 @@ async function main() {
 
   console.log(`Creating deployment status as ${state}...`)
 
+  const logUrl = `${github.context.serverUrl}/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}`
+
   const response = await octokit.request(
     'POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses',
     {
@@ -53,7 +57,8 @@ async function main() {
       environment,
       deployment_id: deploymentId,
       state,
-      environment_url: url,
+      environment_url: environmentUrl,
+      log_url: logUrl,
       auto_inactive: false,
     },
   )

@@ -3,11 +3,8 @@ import type { EmitterWebhookEventName } from '@octokit/webhooks'
 import type { RequestHandler } from './$types'
 
 import { app, octokitRequest, token } from '$lib/github'
-import { prisma } from '$lib/prisma'
 
-app.webhooks.on('push', async ({ id, name, payload }) => {
-  console.log('SOMEBODY PUSHED', { id, name, payload })
-
+app.webhooks.on('push', async ({ payload }) => {
   const workflowResponse = await octokitRequest(
     'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
     {
@@ -17,9 +14,11 @@ app.webhooks.on('push', async ({ id, name, payload }) => {
       ref: 'main',
       inputs: {
         TOKEN: token,
-        owner: 'elysium-everlasting',
-        repo: 'demo',
-        ref: 'main',
+        owner: payload.repository.owner.name,
+        repo: payload.repository.name,
+        ref: payload.ref,
+        environment: 'preview',
+        environment_url: 'https://github.com',
       },
     },
   )
@@ -28,10 +27,6 @@ app.webhooks.on('push', async ({ id, name, payload }) => {
 })
 
 export const POST: RequestHandler = async (event) => {
-  console.log('trying to read prisma')
-
-  console.log('users: ', await prisma.user.findMany())
-
   const id = event.request.headers.get('X-Github-Delivery') ?? ''
   const name = event.request.headers.get('X-Github-Event') as EmitterWebhookEventName
   const signature = event.request.headers.get('x-hub-signature-256') ?? ''
