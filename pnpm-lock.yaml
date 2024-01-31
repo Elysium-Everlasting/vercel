@@ -85,10 +85,15 @@ importers:
       '@actions/github':
         specifier: ^6.0.0
         version: 6.0.0
+      octokit:
+        specifier: ^3.1.2
+        version: 3.1.2
     devDependencies:
       '@vercel/ncc':
         specifier: ^0.38.1
         version: 0.38.1
+
+  .github/actions/create-deployment/dist: {}
 
   apps/github-app-js-sample:
     dependencies:

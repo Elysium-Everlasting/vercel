@@ -2,6 +2,7 @@
 
 import core from '@actions/core'
 import github from '@actions/github'
+import { Octokit } from 'octokit'
 
 const NAME_KEY = 'name'
 const DEPLOYMENT_ID_OUTPUT_KEY = 'deployment_id'
@@ -56,7 +57,7 @@ async function main() {
   const state = core.getInput('status')
   const ref = getBranchName()
 
-  const octokit = github.getOctokit(token)
+  const octokit = new Octokit({ auth: token })
 
   if (deploymentId == null) {
     console.log('No deployment ID provided, creating a new deployment.')
