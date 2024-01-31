@@ -30173,6 +30173,9 @@ async function main() {
   const name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('name')
   const environment = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('environment')
   const url = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('url')
+  const repo = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('repo')
+  const owner = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('owner')
+
   let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined
   /** @type {any} */
   const state = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('status')
@@ -30180,13 +30183,13 @@ async function main() {
 
   const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(token)
 
-  const repo = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo
 
   if (deploymentId == null) {
     console.log('No deployment ID provided, creating a new deployment.')
 
     const response = await octokit.request('POST /repos/{owner}/{repo}/deployments', {
-      ...repo,
+      repo,
+      owner,
       ref,
       environment,
       payload: {
@@ -30210,7 +30213,8 @@ async function main() {
   const response = await octokit.request(
     'POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses',
     {
-      ...repo,
+      repo,
+      owner,
       environment,
       deployment_id: deploymentId,
       state,
@@ -30234,70 +30238,6 @@ async function main() {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput(DEPLOYMENT_ID_OUTPUT_KEY, deploymentId)
     return
   }
-
-  // If this deployment is active, then delete all previous deployments with the same name.
-
-  await octokit
-    .request('GET /repos/{owner}/{repo}/deployments', { ...repo, environment, per_page: 100 })
-    .then(async (response) => {
-      if (response.status !== 200) {
-        return
-      }
-
-      /**
-       * Get existing deployments with the same name, but with a different deployment ID;
-       * set them to inactive, then delete them.
-       */
-      const deploymentsWithPrefix = response.data.filter((deployment) => {
-        /**
-         * Ignore deployments with a string payload.
-         */
-        if (typeof deployment.payload === 'string') {
-          return false
-        }
-
-        const deploymentName = deployment.payload[NAME_KEY]
-        return (
-          typeof deploymentName === 'string' &&
-          deploymentName.startsWith(name) &&
-          deployment.id !== deploymentId
-        )
-      })
-
-      console.log('Setting matching deployments to inactive...')
-
-      /**
-       * Set all deployments with the same name to inactive.
-       */
-      await Promise.all(
-        deploymentsWithPrefix.map(async (deployment) => {
-          return await octokit.request(
-            'POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses',
-            {
-              deployment_id: deployment.id,
-              state: INACTIVE_STATE,
-              ...repo,
-            },
-          )
-        }),
-      )
-
-      console.log('Deleting matching deployments...')
-
-      /**
-       * Delete all deployments with the same name.
-       */
-      await Promise.all(
-        deploymentsWithPrefix.map(async (deployment) => {
-          return await octokit.request('DELETE /repos/{owner}/{repo}/deployments/{deployment_id}', {
-            ...repo,
-            deployment_id: deployment.id,
-          })
-        }),
-      )
-
-      console.log('Done deleting matching deployments.')
-    })
 
   console.log('Done creating deployment.')
 
