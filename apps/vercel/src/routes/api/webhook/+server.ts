@@ -5,6 +5,11 @@ import type { RequestHandler } from './$types'
 import { app, octokitRequest, token } from '$lib/github'
 
 app.webhooks.on('push', async ({ payload }) => {
+  if (payload.repository.name === 'vercel') {
+    console.log('This is a push to the vercel repository, ignore.')
+    return
+  }
+
   const workflowResponse = await octokitRequest(
     'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
     {
