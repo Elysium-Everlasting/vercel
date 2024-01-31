@@ -5,24 +5,21 @@ import type { RequestHandler } from './$types'
 import { app, octokitRequest, token } from '$lib/github'
 import { prisma } from '$lib/prisma'
 
-const owner = 'elysium-everlasting'
-const repo = 'vercel'
-const workflowId = '.github/workflows/hello.yml'
-
 app.webhooks.on('push', async ({ id, name, payload }) => {
   console.log('SOMEBODY PUSHED', { id, name, payload })
 
   const workflowResponse = await octokitRequest(
     'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
     {
-      owner,
-      repo,
-      workflow_id: workflowId,
+      owner: 'elysium-everlasting',
+      repo: 'vercel',
+      workflow_id: '.github/workflows/hello.yml',
       ref: 'main',
       inputs: {
         TOKEN: token,
-        repo: payload.repository.name,
-        owner: payload.repository.owner.name,
+        owner: 'elysium-everlasting',
+        repo: 'demo',
+        ref: 'main',
       },
     },
   )
