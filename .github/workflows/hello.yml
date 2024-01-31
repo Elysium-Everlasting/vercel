@@ -41,7 +41,7 @@ jobs:
 
       - name: Create in_progress deployment
         id: create_deployment
-        uses: /tmp/.github/actions/create-deployment
+        uses: '/tmp/.github/actions/create-deployment'
         working-directory: /tmp
         with:
           TOKEN: ${{ inputs.TOKEN }}
@@ -53,7 +53,7 @@ jobs:
           status: in_progress
 
       - name: Create success deployment
-        uses: /tmp/.github/actions/create-deployment
+        uses: '/tmp/.github/actions/create-deployment'
         working-directory: /tmp
         with:
           TOKEN: ${{ inputs.TOKEN }}
@@ -66,7 +66,7 @@ jobs:
 
       - name: Create failure deployment
         if: ${{ failure() }}
-        uses: /tmp/.github/actions/create-deployment
+        uses: '/tmp/.github/actions/create-deployment'
         working-directory: /tmp
         with:
           TOKEN: ${{ inputs.TOKEN }}
