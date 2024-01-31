@@ -1,5 +1,5 @@
 {
-  "name": "@github-actions/run-build",
+  "name": "@github-actions/create-deployment",
   "type": "module",
   "scripts": {
     "build": "ncc build src/index.js"

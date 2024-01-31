@@ -62,6 +62,7 @@ jobs:
           environment: ${{ inputs.environment }}
           environment_url: ${{ inputs.environment_url }}
           status: success
+          deployment_id: ${{ steps.create_deployment.outputs.deployment_id }}
 
       - name: Create failure deployment
         if: ${{ failure() }}
@@ -74,3 +75,4 @@ jobs:
           environment: ${{ inputs.environment }}
           environment_url: ${{ inputs.environment_url }}
           status: failure
+          deployment_id: ${{ steps.create_deployment.outputs.deployment_id }}
