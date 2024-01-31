@@ -30713,7 +30713,7 @@ export const GetDeploymentsDocument = {
                   arguments: [
                     {
                       kind: 'Argument',
-                      name: { kind: 'Name', value: 'last' },
+                      name: { kind: 'Name', value: 'first' },
                       value: { kind: 'IntValue', value: '10' },
                     },
                     {

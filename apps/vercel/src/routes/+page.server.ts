@@ -7,7 +7,7 @@ import { notNull } from '$lib/utils'
 const deploymentsQuery = graphql(`
   query GetDeployments($owner: String!, $name: String!) {
     repository(owner: $owner, name: $name) {
-      deployments(last: 10, orderBy: { field: CREATED_AT, direction: DESC }) {
+      deployments(first: 10, orderBy: { field: CREATED_AT, direction: DESC }) {
         edges {
           node {
             id
@@ -66,6 +66,8 @@ export const load: PageServerLoad = async () => {
   const owner = 'elysium-everlasting'
   const name = 'demo'
   const deploymentsResult = await client.query(deploymentsQuery, { owner, name })
+
+  console.log(JSON.stringify(deploymentsResult.data?.repository?.deployments, null, 2))
 
   const deployments =
     deploymentsResult.data?.repository?.deployments?.edges
