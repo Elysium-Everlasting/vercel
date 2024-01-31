@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types'
 
 import { graphql } from '$lib/__generated__/gql'
-import { client } from '$lib/github'
+import { client, octokitRequest, token } from '$lib/github'
 import { notNull } from '$lib/utils'
 
 const deploymentsQuery = graphql(`
@@ -85,6 +85,27 @@ export const load: PageServerLoad = async () => {
   const repository = {
     deployments,
   }
+
+  // const owner = 'elysium-everlasting'
+  const repo = 'vercel'
+  const workflowId = '.github/workflows/hello.yml'
+
+  const workflowResponse = await octokitRequest(
+    'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
+    {
+      owner,
+      repo,
+      workflow_id: workflowId,
+      ref: 'main',
+      inputs: {
+        TOKEN: token,
+        repo,
+        owner: name,
+      },
+    },
+  )
+
+  console.log(workflowResponse)
 
   return {
     repository,
