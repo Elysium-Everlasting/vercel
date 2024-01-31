@@ -4,6 +4,12 @@ inputs:
   TOKEN:
     description: GitHub Actions secret token.
     required: true
+  repo:
+    description: Remote repo.
+    required: true
+  owner:
+    description: Remote repo owner.
+    required: true
   environment:
     description: Environment name for the deployment.
     required: true

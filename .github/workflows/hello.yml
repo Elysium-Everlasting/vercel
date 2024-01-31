@@ -24,9 +24,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    environment:
-      name: ${{ inputs.owner }}/${{ inputs.repo }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
