@@ -10,6 +10,9 @@ inputs:
   owner:
     description: Remote repo owner.
     required: true
+  ref:
+    description: Remote repo ref.
+    required: true
   environment:
     description: Environment name for the deployment.
     required: true

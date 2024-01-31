@@ -1,52 +1,16 @@
 // @ts-check
 
 import core from '@actions/core'
-import github from '@actions/github'
 import { Octokit } from 'octokit'
 
-const NAME_KEY = 'name'
 const DEPLOYMENT_ID_OUTPUT_KEY = 'deployment_id'
 const SUCCESS_STATE = 'success'
-const INACTIVE_STATE = 'inactive'
-
-/**
- * @see https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
- */
-const REGEX = {
-  BRANCH: /refs\/heads\/(.*)/,
-  TAG: /refs\/tags\/(.*)/,
-
-  // If the above two fail to match, then use GITHUB_HEAD_REF instead of regex match.
-  PULL_REQUEST: /refs\/pull\/(\d+)\/merge/,
-}
-
-/**
- * If triggered by PUSH or TAG, return a regex match.
- * For pull requests, use the head ref.
- *
- * @returns {string} Current branch the action is running for.
- */
-function getBranchName() {
-  const ref = process.env['GITHUB_REF'] ?? ''
-
-  const branchMatch = REGEX.BRANCH.exec(ref)
-  if (branchMatch) {
-    return branchMatch[1] ?? ''
-  }
-
-  const tagMatch = REGEX.TAG.exec(ref)
-  if (tagMatch) {
-    return tagMatch[1] ?? ''
-  }
-
-  return process.env['GITHUB_HEAD_REF'] ?? ''
-}
 
 async function main() {
   const deploymentIdInput = core.getInput('deployment_id')
 
   const token = core.getInput('TOKEN')
-  const ref = 'main' // core.getInput('ref')
+  const ref = core.getInput('ref')
   const environment = core.getInput('environment')
   const url = core.getInput('url')
   const repo = core.getInput('repo')
