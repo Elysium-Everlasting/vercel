@@ -13,7 +13,7 @@
   $: user = $page.data.user
 </script>
 
-<div class="flex justify-between px-8">
+<div class="flex justify-between px-4">
   <!-- Left -->
   <div class="p-4 flex items-center justify-between gap-2">
     <div class="flex items-center">
@@ -56,7 +56,7 @@
   </div>
 
   <!-- Right -->
-  <div class="flex items-center gap-2 p-4">
+  <div class="flex items-center gap-4">
     <div class="space-x-1">
       <Button href="/feedback" target="_blank" variant="outline" class="text-md">Feedback</Button>
 
@@ -65,9 +65,15 @@
       <Button href="/changelog" target="_blank" variant="ghost">Changelog</Button>
 
       <Button href="/help" target="_blank" variant="ghost">Help</Button>
+
+      <Button on:click={toggleMode} variant="outline" size="icon">
+        <Sun class="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        <Moon class="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <span class="sr-only">Toggle theme</span>
+      </Button>
     </div>
 
-    <div class="flex items-center">
+    <div class="flex items-center gap-2">
       <Popover.Root>
         <Popover.Trigger>
           <Button variant="ghost" size="icon" class="rounded-full">
@@ -149,18 +155,6 @@
           </DropdownMenu.Group>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
-    </div>
-
-    <div>
-      <Button on:click={toggleMode} variant="outline" size="icon">
-        <Sun
-          class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-        />
-        <Moon
-          class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-        />
-        <span class="sr-only">Toggle theme</span>
-      </Button>
     </div>
   </div>
 </div>

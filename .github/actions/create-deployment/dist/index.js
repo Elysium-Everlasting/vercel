@@ -30113,35 +30113,6 @@ module.exports = parseParams
 /******/ }
 /******/ 
 /************************************************************************/
-/******/ /* webpack/runtime/compat get default export */
-/******/ (() => {
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__nccwpck_require__.n = (module) => {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			() => (module['default']) :
-/******/ 			() => (module);
-/******/ 		__nccwpck_require__.d(getter, { a: getter });
-/******/ 		return getter;
-/******/ 	};
-/******/ })();
-/******/ 
-/******/ /* webpack/runtime/define property getters */
-/******/ (() => {
-/******/ 	// define getter functions for harmony exports
-/******/ 	__nccwpck_require__.d = (exports, definition) => {
-/******/ 		for(var key in definition) {
-/******/ 			if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 			}
-/******/ 		}
-/******/ 	};
-/******/ })();
-/******/ 
-/******/ /* webpack/runtime/hasOwnProperty shorthand */
-/******/ (() => {
-/******/ 	__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ })();
-/******/ 
 /******/ /* webpack/runtime/compat */
 /******/ 
 /******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
@@ -30151,66 +30122,80 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(3949);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(8752);
-/* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
 // @ts-check
 
 
-const DEPLOYMENT_ID_OUTPUT_KEY = 'deployment_id';
-const SUCCESS_STATE = 'success';
+
+
+const DEPLOYMENT_ID_OUTPUT_KEY = 'deployment_id'
+
 async function main() {
-    const deploymentIdInput = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('deployment_id');
-    const token = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('TOKEN');
-    const repo = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('repo');
-    const owner = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('owner');
-    const ref = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('ref');
-    const environment = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('environment');
-    const url = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('url');
-    const state = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput('status');
-    let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined;
-    const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1___default().getOctokit(token);
-    if (deploymentId == null) {
-        console.log('No deployment ID provided, creating a new deployment.');
-        const response = await octokit.request('POST /repos/{owner}/{repo}/deployments', {
-            repo,
-            owner,
-            ref,
-            environment,
-            auto_merge: false,
-            required_contexts: [],
-        });
-        console.log('Created deployment.');
-        if (response.status !== 201) {
-            throw new Error('Could not create a deployment.');
-        }
-        deploymentId = response.data.id;
-    }
-    console.log(`Creating deployment status as ${state}...`);
-    const response = await octokit.request('POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses', {
-        repo,
-        owner,
-        environment,
-        deployment_id: deploymentId,
-        state,
-        environment_url: url,
-        auto_inactive: false,
-    });
-    console.log('Created deployment status.');
+  const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('TOKEN')
+  const repo = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('repo')
+  const owner = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('owner')
+  const ref = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('ref')
+  const environment = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('environment')
+  const environmentUrl = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('environment_url')
+  const state = /** @type {any} */ (_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('status'))
+
+  const deploymentIdInput = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('deployment_id')
+
+  let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined
+
+  const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(token)
+
+  if (deploymentId == null) {
+    console.log('No deployment ID provided, creating a new deployment.')
+
+    const response = await octokit.request('POST /repos/{owner}/{repo}/deployments', {
+      repo,
+      owner,
+      ref,
+      environment,
+      auto_merge: false,
+      required_contexts: [],
+    })
+
+    console.log('Created deployment.')
+
     if (response.status !== 201) {
-        throw new Error('Could not create a deployment status.');
+      throw new Error('Could not create a deployment.')
     }
-    // If this deployment isn't active, then we're done.
-    if (state !== SUCCESS_STATE) {
-        console.log('Done creating deployment.');
-        console.log(`Deployment ID: ${deploymentId}`);
-        _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setOutput(DEPLOYMENT_ID_OUTPUT_KEY, deploymentId);
-        return;
-    }
-    console.log('Done creating deployment.');
-    _actions_core__WEBPACK_IMPORTED_MODULE_0___default().setOutput(DEPLOYMENT_ID_OUTPUT_KEY, deploymentId);
+
+    deploymentId = response.data.id
+  }
+
+  console.log(`Creating deployment status as ${state}...`)
+
+  const logUrl = `${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.serverUrl}/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}/actions/runs/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.runId}`
+
+  const response = await octokit.request(
+    'POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses',
+    {
+      repo,
+      owner,
+      environment,
+      deployment_id: deploymentId,
+      state,
+      environment_url: environmentUrl,
+      log_url: logUrl,
+      auto_inactive: false,
+    },
+  )
+
+  console.log('Created deployment status.')
+
+  if (response.status !== 201) {
+    throw new Error('Could not create a deployment status.')
+  }
+
+  console.log('Done creating deployment.')
+
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput(DEPLOYMENT_ID_OUTPUT_KEY, deploymentId)
 }
-main();
+
+main()
 
 })();
 

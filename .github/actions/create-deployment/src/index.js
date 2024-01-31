@@ -12,17 +12,13 @@ async function main() {
   const ref = core.getInput('ref')
   const environment = core.getInput('environment')
   const environmentUrl = core.getInput('environment_url')
-  const state: any = core.getInput('status')
+  const state = /** @type {any} */ (core.getInput('status'))
 
   const deploymentIdInput = core.getInput('deployment_id')
-
-  ;('${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}')
 
   let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined
 
   const octokit = github.getOctokit(token)
-
-  console.log('server url: ', github.context.serverUrl)
 
   if (deploymentId == null) {
     console.log('No deployment ID provided, creating a new deployment.')
