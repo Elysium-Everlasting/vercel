@@ -35,12 +35,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Vercel
         uses: actions/checkout@v3
+        working-directory: /tmp
 
       - name: Create in_progress deployment
         id: create_deployment
-        uses: ./.github/actions/create-deployment
+        uses: /tmp/.github/actions/create-deployment
+        working-directory: /tmp
         with:
           TOKEN: ${{ inputs.TOKEN }}
           repo: ${{ inputs.repo }}
@@ -51,7 +53,8 @@ jobs:
           status: in_progress
 
       - name: Create success deployment
-        uses: ./.github/actions/create-deployment
+        uses: /tmp/.github/actions/create-deployment
+        working-directory: /tmp
         with:
           TOKEN: ${{ inputs.TOKEN }}
           repo: ${{ inputs.repo }}
@@ -63,7 +66,8 @@ jobs:
 
       - name: Create failure deployment
         if: ${{ failure() }}
-        uses: ./.github/actions/create-deployment
+        uses: /tmp/.github/actions/create-deployment
+        working-directory: /tmp
         with:
           TOKEN: ${{ inputs.TOKEN }}
           repo: ${{ inputs.repo }}
