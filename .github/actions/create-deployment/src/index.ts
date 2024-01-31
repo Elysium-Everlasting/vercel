@@ -1,26 +1,26 @@
 // @ts-check
 
 import core from '@actions/core'
-import { Octokit } from 'octokit'
+import github from '@actions/github'
 
 const DEPLOYMENT_ID_OUTPUT_KEY = 'deployment_id'
-const SUCCESS_STATE = 'success'
 
 async function main() {
-  const deploymentIdInput = core.getInput('deployment_id')
-
   const token = core.getInput('TOKEN')
+  const repo = core.getInput('repo')
+  const owner = core.getInput('owner')
   const ref = core.getInput('ref')
   const environment = core.getInput('environment')
   const url = core.getInput('url')
-  const repo = core.getInput('repo')
-  const owner = core.getInput('owner')
+  const state: any = core.getInput('status')
+
+  const deploymentIdInput = core.getInput('deployment_id')
 
   let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined
-  /** @type {any} */
-  const state = core.getInput('status')
 
-  const octokit = new Octokit({ auth: token })
+  const octokit = github.getOctokit(token)
+
+  console.log('server url: ', github.context.serverUrl)
 
   if (deploymentId == null) {
     console.log('No deployment ID provided, creating a new deployment.')
@@ -62,16 +62,6 @@ async function main() {
 
   if (response.status !== 201) {
     throw new Error('Could not create a deployment status.')
-  }
-
-  // If this deployment isn't active, then we're done.
-
-  if (state !== SUCCESS_STATE) {
-    console.log('Done creating deployment.')
-    console.log(`Deployment ID: ${deploymentId}`)
-
-    core.setOutput(DEPLOYMENT_ID_OUTPUT_KEY, deploymentId)
-    return
   }
 
   console.log('Done creating deployment.')
