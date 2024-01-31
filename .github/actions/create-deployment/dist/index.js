@@ -44436,7 +44436,7 @@ async function main() {
   const deploymentIdInput = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('deployment_id')
 
   const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('TOKEN')
-  const name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('name')
+  const ref = 'main' // core.getInput('ref')
   const environment = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('environment')
   const url = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('url')
   const repo = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('repo')
@@ -44445,7 +44445,6 @@ async function main() {
   let deploymentId = deploymentIdInput ? parseInt(deploymentIdInput, 10) : undefined
   /** @type {any} */
   const state = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('status')
-  const ref = getBranchName()
 
   const octokit = new octokit__WEBPACK_IMPORTED_MODULE_2__.Octokit({ auth: token })
 
@@ -44457,9 +44456,6 @@ async function main() {
       owner,
       ref,
       environment,
-      payload: {
-        [NAME_KEY]: name,
-      },
       auto_merge: false,
       required_contexts: [],
     })

@@ -97,24 +97,24 @@ export const load: PageServerLoad = async () => {
 
   // console.log(deployomentResponse)
 
-  // const repo = 'vercel'
-  // const workflowId = '.github/workflows/hello.yml'
-  // const workflowResponse = await octokitRequest(
-  //   'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
-  //   {
-  //     owner,
-  //     repo,
-  //     workflow_id: workflowId,
-  //     ref: 'main',
-  //     inputs: {
-  //       TOKEN: token,
-  //       repo,
-  //       owner: name,
-  //     },
-  //   },
-  // )
+  const repo = 'vercel'
+  const workflowId = '.github/workflows/hello.yml'
+  const workflowResponse = await octokitRequest(
+    'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
+    {
+      owner,
+      repo,
+      workflow_id: workflowId,
+      ref: 'main',
+      inputs: {
+        TOKEN: token,
+        repo,
+        owner: name,
+      },
+    },
+  )
 
-  // console.log(workflowResponse)
+  console.log(workflowResponse)
 
   return {
     repository,
