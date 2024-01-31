@@ -37,7 +37,8 @@ jobs:
     steps:
       - name: Checkout Vercel
         uses: actions/checkout@v3
-        working-directory: ./temp
+        with:
+          path: ./temp
 
       - name: Create in_progress deployment
         id: create_deployment
