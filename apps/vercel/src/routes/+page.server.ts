@@ -4,7 +4,7 @@ import { graphql } from '$lib/__generated__/gql'
 import { client } from '$lib/github'
 import { notNull } from '$lib/utils'
 
-const a = graphql(`
+const deploymentsQuery = graphql(`
   query GetDeployments($owner: String!, $name: String!) {
     repository(owner: $owner, name: $name) {
       deployments(last: 30, orderBy: { field: CREATED_AT, direction: DESC }) {
@@ -63,15 +63,13 @@ function timeBetween(date1: Date, date2 = new Date()) {
 }
 
 export const load: PageServerLoad = async () => {
-  const result = await client.query(a, {
-    owner: 'elysium-everlasting',
-    name: 'demo',
-  })
+  const owner = 'elysium-everlasting'
+  const name = 'demo'
 
-  console.log(JSON.stringify(result.data?.repository, null, 2))
+  const deploymentsResult = await client.query(deploymentsQuery, { owner, name })
 
   const deployments =
-    result.data?.repository?.deployments?.edges
+    deploymentsResult.data?.repository?.deployments?.edges
       ?.map((edge) => edge?.node)
       .filter(notNull)
       .map((node) => {

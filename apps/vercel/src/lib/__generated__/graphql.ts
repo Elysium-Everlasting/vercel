@@ -30565,6 +30565,15 @@ export type WorkflowsParametersInput = {
   workflows: Array<WorkflowFileReferenceInput>
 }
 
+export type GetUserQueryVariables = Exact<{
+  login: Scalars['String']['input']
+}>
+
+export type GetUserQuery = {
+  __typename?: 'Query'
+  user?: { __typename?: 'User'; avatarUrl: any; login: string; email: string } | null
+}
+
 export type GetDeploymentsQueryVariables = Exact<{
   owner: Scalars['String']['input']
   name: Scalars['String']['input']
@@ -30608,6 +30617,50 @@ export type GetDeploymentsQuery = {
   } | null
 }
 
+export const GetUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'login' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'login' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'login' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'login' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>
 export const GetDeploymentsDocument = {
   kind: 'Document',
   definitions: [
