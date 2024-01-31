@@ -44,7 +44,7 @@ function getBranchName() {
 async function main() {
   const deploymentIdInput = core.getInput('deployment_id')
 
-  const token = core.getInput('GITHUB_TOKEN')
+  const token = core.getInput('TOKEN')
   const name = core.getInput('name')
   const environment = core.getInput('environment')
   const url = core.getInput('url')

@@ -30,3 +30,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Create in-progress deployment
+        id: create_deployment
+        uses: ./.github/actions/create-deployment
+        with:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          environment: preview
+          name: ${{ inputs.owner }}/${{ inputs.repo }}
+          url: https://github.com
+          status: success
