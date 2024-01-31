@@ -38,7 +38,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create in-progress deployment
+      - name: Create in_progress deployment
         id: create_deployment
         uses: ./.github/actions/create-deployment
         with:
@@ -48,4 +48,27 @@ jobs:
           ref: ${{ inputs.ref }}
           environment: ${{ inputs.environment }}
           environment_url: ${{ inputs.environment_url }}
+          status: in_progress
+
+      - name: Create success deployment
+        uses: ./.github/actions/create-deployment
+        with:
+          TOKEN: ${{ inputs.TOKEN }}
+          repo: ${{ inputs.repo }}
+          owner: ${{ inputs.owner }}
+          ref: ${{ inputs.ref }}
+          environment: ${{ inputs.environment }}
+          environment_url: ${{ inputs.environment_url }}
           status: success
+
+      - name: Create failure deployment
+        if: ${{ failure() }}
+        uses: ./.github/actions/create-deployment
+        with:
+          TOKEN: ${{ inputs.TOKEN }}
+          repo: ${{ inputs.repo }}
+          owner: ${{ inputs.owner }}
+          ref: ${{ inputs.ref }}
+          environment: ${{ inputs.environment }}
+          environment_url: ${{ inputs.environment_url }}
+          status: failure
