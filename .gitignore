@@ -13,9 +13,6 @@ coverage/
 
 ## Build outputs.
 
-### Specified by tsconfig.json
-dist/
-
 # Logs.
 *.log
 .pnpm-debug.log*

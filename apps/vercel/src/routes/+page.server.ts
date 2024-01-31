@@ -67,24 +67,6 @@ export const load: PageServerLoad = async () => {
   const name = 'demo'
   const deploymentsResult = await client.query(deploymentsQuery, { owner, name })
 
-  // const repo = 'vercel'
-  // const workflowResponse = await octokitRequest(
-  //   'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
-  //   {
-  //     owner,
-  //     repo,
-  //     workflow_id: '.github/workflows/hello.yml',
-  //     ref: 'main',
-  //     inputs: {
-  //       TOKEN: token,
-  //       repo: name,
-  //       owner,
-  //     },
-  //   },
-  // )
-
-  // console.log(workflowResponse)
-
   const deployments =
     deploymentsResult.data?.repository?.deployments?.edges
       ?.map((edge) => edge?.node)
